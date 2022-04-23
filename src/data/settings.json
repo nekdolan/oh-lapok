@@ -1,0 +1,209 @@
+[
+  {
+    "label": "Kiegészítő",
+    "key": "kieg",
+    "component": "n-select",
+    "default": [],
+    "props": {
+      "placeholder": "válassz többet...",
+      "multiple": true,
+      "clearable": true,
+      "options": [
+        {
+          "label": "Alfa",
+          "value": "alfa"
+        },
+        {
+          "label": "Aréna",
+          "value": "arena"
+        },
+        {
+          "label": "Szövetségek Kora",
+          "value": "szovetseg"
+        },
+        {
+          "label": "Egyedi",
+          "value": "egyedi"
+        },
+        {
+          "label": "Promóciós",
+          "value": "promo"
+        }
+      ]
+    }
+  },
+  {
+    "label": "Ritkaság",
+    "key": "ritka",
+    "component": "n-select",
+    "default": [],
+    "props": {
+      "placeholder": "válassz többet...",
+      "multiple": true,
+      "clearable": true,
+      "options": [
+        {
+          "label": "Fehér",
+          "value": "feher"
+        },
+        {
+          "label": "Szürke",
+          "value": "szurke"
+        },
+        {
+          "label": "Zöld",
+          "value": "zold"
+        },
+        {
+          "label": "Kék",
+          "value": "kek"
+        },
+        {
+          "label": "Narancs",
+          "value": "narancs"
+        },
+        {
+          "label": "Piros",
+          "value": "piros"
+        },
+        {
+          "label": "Arany",
+          "value": "arany"
+        },
+        {
+          "label": "Fekete",
+          "value": "fekete"
+        }
+      ]
+    }
+  },
+  {
+    "label": "Szint",
+    "key": "szint",
+    "component": "n-slider",
+    "default": [0, 6],
+    "props": {
+      "placeholder": "válassz kettőt...",
+      "min": 0,
+      "max": 6,
+      "range": true,
+      "step": "mark",
+      "marks": {
+        "0": "?",
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5",
+        "6": "6"
+      }
+    }
+  },
+  {
+    "label": "Karakter és Nemes",
+    "key": "tipus",
+    "component": "n-tree-select",
+    "default": [],
+    "props": {
+      "placeholder": "válassz főtípust és/vagy altípust",
+      "multiple": true,
+      "cascade": true,
+      "check-strategy": "child",
+      "clearable": true,
+      "options": [
+        {
+          "label": "Főtípusok",
+          "key": "fotipusok",
+          "children": [
+            {
+              "label": "Zsoldos",
+              "key": "zsoldos"
+            },
+            {
+              "label": "Hős",
+              "key": "hos"
+            },
+            {
+              "label": "Nemes",
+              "key": "nemes"
+            }
+          ]
+        },
+        {
+          "label": "Altípusok",
+          "key": "altipus",
+          "children": [
+            {
+              "label": "Ember (Nő)",
+              "key": "ember_no"
+            },
+            {
+              "label": "Ember (Férfi)",
+              "key": "ember_ferfi"
+            },
+            {
+              "label": "Gnóm (Férfi)",
+              "key": "gnom_ferfi"
+            },
+            {
+              "label": "Hárpia (Nő)",
+              "key": "harpia_no"
+            },
+            {
+              "label": "Kentaur (Nő)",
+              "key": "kentaur_no"
+            },
+            {
+              "label": "Kentaur (Férfi)",
+              "key": "kentaur_ferfi"
+            },
+            {
+              "label": "Kobold (Nő)",
+              "key": "kobold_no"
+            },
+            {
+              "label": "Kobold (Férfi)",
+              "key": "kobold_ferfi"
+            },
+            {
+              "label": "Ork (Férfi)",
+              "key": "ork_ferfi"
+            },
+            {
+              "label": "Pókszerzet (Nő)",
+              "key": "pokszerzet_no"
+            },
+            {
+              "label": "Szatír (Nő)",
+              "key": "szatir_no"
+            },
+            {
+              "label": "Szatír (Férfi)",
+              "key": "szatir_ferfi"
+            },
+            {
+              "label": "Törp (Férfi)",
+              "key": "torp_ferfi"
+            },
+            {
+              "label": "Tünde (Nő)",
+              "key": "tunde_no"
+            },
+            {
+              "label": "Tünde (Férfi)",
+              "key": "tunde_ferfi"
+            },
+            {
+              "label": "Tündér (Nő)",
+              "key": "tunder_no"
+            },
+            {
+              "label": "Élőholt (Férfi)",
+              "key": "eloholt_ferfi"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]
