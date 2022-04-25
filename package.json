@@ -2,12 +2,13 @@
   "name": "oh-lapok",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "node src/parse.js && vite",
+    "build": "node src/parse.js && vite build",
     "preview": "vite preview --port 5050",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@fast-csv/parse": "^4.3.6",
     "lodash": "^4.17.21",
     "lunr": "^2.3.9",
     "lunr-languages": "^1.9.0",

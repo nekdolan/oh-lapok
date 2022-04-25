@@ -1,7 +1,32 @@
 [
   {
+    "label": "Kaszt",
+    "key": "kaszt",
+    "component": "n-select",
+    "default": [],
+    "props": {
+      "placeholder": "válassz többet...",
+      "multiple": true,
+      "clearable": true,
+      "options": [
+        {
+          "label": "Harcos",
+          "value": "harcos"
+        },
+        {
+          "label": "Mágus",
+          "value": "magus"
+        },
+        {
+          "label": "Vadász",
+          "value": "vadasz"
+        }
+      ]
+    }
+  },
+  {
     "label": "Kiegészítő",
-    "key": "kieg",
+    "key": "kiegeszito",
     "component": "n-select",
     "default": [],
     "props": {
@@ -34,7 +59,7 @@
   },
   {
     "label": "Ritkaság",
-    "key": "ritka",
+    "key": "ritkasag",
     "component": "n-select",
     "default": [],
     "props": {
@@ -101,7 +126,7 @@
   },
   {
     "label": "Karakter és Nemes",
-    "key": "tipus",
+    "key": "karakter_tipus",
     "component": "n-tree-select",
     "default": [],
     "props": {
@@ -202,6 +227,239 @@
               "key": "eloholt_ferfi"
             }
           ]
+        }
+      ]
+    }
+  },
+  {
+    "label": "Egyéb Fő- és Altípus",
+    "key": "egyeb_tipus",
+    "component": "n-tree-select",
+    "default": [],
+    "props": {
+      "placeholder": "válassz főtípust és/vagy altípust",
+      "multiple": true,
+      "cascade": true,
+      "check-strategy": "child",
+      "checkable": true,
+      "clearable": true,
+      "options": [
+        {
+          "label": "Fegyverzet",
+          "key": "fegyver",
+          "children": [
+            {
+              "label": "Fegyverzet Alap",
+              "key": "fegyver_alap"
+            },
+            {
+              "label": "Fegyverzet Fejlesztés",
+              "key": "fegyver_fejlesztes"
+            }
+          ]
+        },
+        {
+          "label": "Páncélzat",
+          "key": "pancelzat",
+          "children": [
+            {
+              "label": "Páncélzat Alap",
+              "key": "pancalzat_alap"
+            },
+            {
+              "label": "Páncélzat Fejlesztés",
+              "key": "pancalzat_fejlesztes"
+            }
+          ]
+        },
+        {
+          "label": "Képesség",
+          "key": "kepesseg",
+          "children": [
+            {
+              "label": "Azonnali Képesség",
+              "key": "kepesseg_azonnali"
+            },
+            {
+              "label": "Gyors Képesség",
+              "key": "kepesseg_gyors"
+            },
+            {
+              "label": "Csapda Képesség",
+              "key": "kepesseg_csapda"
+            },
+            {
+              "label": "Folyamatos Képesség",
+              "key": "kepesseg_folyamatos"
+            },
+            {
+              "label": "Báb Képesség",
+              "key": "kepesseg_bab"
+            }
+          ]
+        },
+        {
+          "label": "Ital",
+          "key": "Ital"
+        }
+      ]
+    }
+  },
+  {
+    "label": "Sebzéstípus",
+    "key": "sebzestipus",
+    "component": "n-select",
+    "default": [],
+    "props": {
+      "placeholder": "válassz többet...",
+      "multiple": true,
+      "clearable": true,
+      "options": [
+        {
+          "label": "Normál",
+          "value": "normal"
+        },
+        {
+          "label": "Föld",
+          "value": "fold"
+        },
+        {
+          "label": "tuz",
+          "value": "Tűz"
+        },
+        {
+          "label": "Víz",
+          "value": "viz"
+        },
+        {
+          "label": "Jég",
+          "value": "jeg"
+        },
+        {
+          "label": "Levegő",
+          "value": "levego"
+        },
+        {
+          "label": "Természet",
+          "value": "termeszet"
+        },
+        {
+          "label": "Méreg",
+          "value": "mereg"
+        },
+        {
+          "label": "Elektromos",
+          "value": "elektromos"
+        },
+        {
+          "label": "Lélek",
+          "value": "lelek"
+        }
+      ]
+    }
+  },
+  {
+    "label": "Sebzés",
+    "key": "sebzes",
+    "component": "n-slider",
+    "default": [-11, 20],
+    "custom": {
+      "format-tooltip": "function"
+    },
+    "props": {
+      "placeholder": "válassz kettőt...",
+      "min": -11,
+      "max": 20,
+      "range": true,
+      "step": "1",
+      "marks": {
+        "-11": "-",
+        "-8": "-8",
+        "-4": "-4",
+        "0": "0",
+        "4": "4",
+        "8": "8",
+        "12": "12",
+        "16": "16",
+        "20": "20"
+      }
+    }
+  },
+  {
+    "label": "Páncél",
+    "key": "pancel",
+    "component": "n-slider",
+    "default": [-11, 20],
+    "custom": {
+      "format-tooltip": "function"
+    },
+    "props": {
+      "placeholder": "válassz kettőt...",
+      "min": -11,
+      "max": 20,
+      "range": true,
+      "step": "1",
+      "marks": {
+        "-11": "-",
+        "-8": "-8",
+        "-4": "-4",
+        "0": "0",
+        "4": "4",
+        "8": "8",
+        "12": "12",
+        "16": "16",
+        "20": "20"
+      }
+    }
+  },
+  {
+    "label": "Speciális",
+    "key": "specialis",
+    "component": "n-select",
+    "default": [],
+    "props": {
+      "placeholder": "válassz...",
+      "clearable": true,
+      "options": [
+        {
+          "label": "Bajnok",
+          "value": "bajnok"
+        },
+        {
+          "label": "Fal",
+          "value": "fal"
+        },
+        {
+          "label": "Fegyverzet része: Pajzs",
+          "value": "pajzs"
+        }
+      ]
+    }
+  },
+  {
+    "label": "Felszerelhető",
+    "key": "felszerelheto",
+    "component": "n-select",
+    "default": [],
+    "props": {
+      "placeholder": "válassz...",
+      "clearable": true,
+      "options": [
+        {
+          "label": "Karakter",
+          "value": "karakter"
+        },
+        {
+          "label": "Csatatér",
+          "value": "csatater"
+        },
+        {
+          "label": "Fegyverzet",
+          "value": "fegyverzet"
+        },
+        {
+          "label": "Páncélzat",
+          "value": "pancelzat"
         }
       ]
     }

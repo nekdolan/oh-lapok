@@ -2,9 +2,6 @@
 import { ref } from "vue";
 import settings from "../data/settings.json";
 import _ from "lodash/fp";
-import search from '../search'
-
-const active = ref(true);
 
 const searchForm = _.compose(
   ref,
@@ -12,28 +9,17 @@ const searchForm = _.compose(
   _.map((setting) => [setting.key, setting.default])
 )(settings);
 
-defineProps(["title"]);
+defineProps(["title", "active"]);
+defineEmits(["update:active"]);
 
-function activate() {
-  active.value = !active.value;
-}
-
-search();
-
-// {
-// "label": "",
-//     "key": "",
-//     "children": [
-//   {
-//     "label": "",
-//     "key": ""
-//   }
-// ]
-// }
 </script>
 <template>
-  <n-button @click="activate()"> ... </n-button>
-  <n-drawer v-model:show="active" :width="502" placement="left">
+  <n-drawer
+    :show="active"
+    @update:show="$emit('update:active', $event)"
+    :width="502"
+    placement="left"
+  >
     <n-drawer-content :title="title" closable>
       {{ searchForm }}
       <n-form
