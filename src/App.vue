@@ -1,8 +1,26 @@
 <script setup>
-import { Search12Regular } from '@vicons/fluent'
+import _ from "lodash/fp";
+import { ref, reactive } from "vue";
+import { darkTheme } from "naive-ui";
+import { Search12Regular } from "@vicons/fluent";
 import Finder from "./components/finder.vue";
 import List from "./components/list.vue";
-import { ref } from "vue";
+import settings from "./data/settings.json";
+
+let windowHeight = 0;
+
+try {
+  windowHeight = window.innerHeight;
+} catch (e) {}
+
+const maxDisplay = windowHeight > 1000 ? 32 : 24;
+
+const searchData = _.compose(
+  // reactive,
+  ref,
+  _.fromPairs,
+  _.map((setting) => [setting.key, setting.default])
+)(settings);
 
 const finderActive = ref(false);
 
@@ -12,22 +30,29 @@ function activate() {
 </script>
 
 <template>
-  <header></header>
-  <main>
-    <finder title="Kártya Keresés" v-model:active="finderActive" />
-    <list>
-      <template #header>
-        <n-button type="primary" @click="activate()">
-          <template #icon>
-            <n-icon>
-              <Search12Regular />
-            </n-icon>
-          </template>
-          Keresés
-        </n-button>
-      </template>
-    </list>
-  </main>
+  <n-config-provider :theme="darkTheme">
+    <header>
+      <finder
+        title="Kártya Keresés"
+        v-model:active="finderActive"
+        v-model:search="searchData"
+      />
+    </header>
+    <main>
+      <list :search-data="searchData" :max-display="maxDisplay">
+        <template #header>
+          <n-button type="primary" @click="activate()">
+            <template #icon>
+              <n-icon>
+                <Search12Regular />
+              </n-icon>
+            </template>
+            Keresés
+          </n-button>
+        </template>
+      </list>
+    </main>
+  </n-config-provider>
 </template>
 
 <style>

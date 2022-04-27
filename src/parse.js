@@ -1,27 +1,33 @@
 const fs = require("fs");
 const path = require("path");
 const csv = require("@fast-csv/parse");
+const headers = require("./data/utils.json").headers;
+const _ = require("lodash/fp");
+const settings = require("./data/settings.json");
 
-const headers = [
-  "kiskep",
-  "forras",
-  "nagykep",
-  "kiegeszito",
-  "nev",
-  "ritkasag",
-  "szint",
-  "fotipus",
-  "altipus",
-  "kaszt",
-  "sorszam",
-  "illusztrator",
-  "sebzestipus",
-  "sebzes",
-  "pancel",
-  "kepesseg",
-  "felszerelheto",
-  "specialis",
-];
+function colllectKeys() {
+  return _.reduce(function (sum, setting) {
+    const options = setting.props.options;
+    if (!options) {
+      return sum;
+    }
+    const newSum = { ...sum };
+    _.forEach((option) => {
+      newSum[option.value || option.key] = option.label;
+      if (option.children) {
+        _.forEach((child) => {
+          newSum[child.key] = child.label;
+        })(option.children);
+      }
+    })(options);
+    return newSum;
+  }, {})(settings);
+}
+
+fs.writeFileSync(
+  path.resolve(__dirname, "computed", "keys.json"),
+  JSON.stringify(colllectKeys(), null, 2)
+);
 
 const target = fs.createWriteStream(
   path.resolve(__dirname, "computed", "cards.json")

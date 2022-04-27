@@ -1,0 +1,38 @@
+{
+  "headers": [
+    "kiskep",
+    "forras",
+    "nagykep",
+    "kiegeszito",
+    "nev",
+    "ritkasag",
+    "szint",
+    "fotipus",
+    "altipus",
+    "kaszt",
+    "sorszam",
+    "illusztrator",
+    "sebzestipus",
+    "sebzes",
+    "pancel",
+    "kepesseg",
+    "felszerelheto",
+    "specialis"
+  ],
+  "extension": {
+    "szovetseg": "Szövetségek Kora Kiegészítő",
+    "alfa": "Alfa Kiegészítő",
+    "arena": "Aréna Kiegészítő",
+    "promo": "Promóciós Kártyák",
+    "egyedi": "Egyedi Kártyák"
+  },
+  "fotipus": [
+    "zsoldos",
+    "hos",
+    "ital",
+    "fegyverzet",
+    "pancelzat",
+    "nemes",
+    "kepesseg"
+  ]
+}

@@ -4,6 +4,9 @@
     "key": "kaszt",
     "component": "n-select",
     "default": [],
+    "filter": {
+      "type": "multiple"
+    },
     "props": {
       "placeholder": "válassz többet...",
       "multiple": true,
@@ -29,6 +32,10 @@
     "key": "kiegeszito",
     "component": "n-select",
     "default": [],
+    "filter": {
+      "type": "multiple",
+      "keep": true
+    },
     "props": {
       "placeholder": "válassz többet...",
       "multiple": true,
@@ -62,6 +69,9 @@
     "key": "ritkasag",
     "component": "n-select",
     "default": [],
+    "filter": {
+      "type": "multiple"
+    },
     "props": {
       "placeholder": "válassz többet...",
       "multiple": true,
@@ -107,6 +117,13 @@
     "key": "szint",
     "component": "n-slider",
     "default": [0, 6],
+    "filter": {
+      "type": "range",
+      "keep": true
+    },
+    "replace": {
+      "0": "?"
+    },
     "props": {
       "placeholder": "válassz kettőt...",
       "min": 0,
@@ -129,6 +146,11 @@
     "key": "karakter_tipus",
     "component": "n-tree-select",
     "default": [],
+    "filter": {
+      "type": "combined",
+      "keys": ["fotipus", "altipus"],
+      "keep": true
+    },
     "props": {
       "placeholder": "válassz főtípust és/vagy altípust",
       "multiple": true,
@@ -138,7 +160,7 @@
       "options": [
         {
           "label": "Főtípusok",
-          "key": "fotipusok",
+          "key": "fotipus",
           "children": [
             {
               "label": "Zsoldos",
@@ -236,6 +258,12 @@
     "key": "egyeb_tipus",
     "component": "n-tree-select",
     "default": [],
+    "filter": {
+      "type": "mesh",
+      "keys": ["fotipus", "altipus"],
+      "keep": true,
+      "multi": true
+    },
     "props": {
       "placeholder": "válassz főtípust és/vagy altípust",
       "multiple": true,
@@ -250,11 +278,11 @@
           "children": [
             {
               "label": "Fegyverzet Alap",
-              "key": "fegyver_alap"
+              "key": "fegyverzet_alap"
             },
             {
               "label": "Fegyverzet Fejlesztés",
-              "key": "fegyver_fejlesztes"
+              "key": "fegyverzet_fejlesztes"
             }
           ]
         },
@@ -264,11 +292,11 @@
           "children": [
             {
               "label": "Páncélzat Alap",
-              "key": "pancalzat_alap"
+              "key": "pancelzat_alap"
             },
             {
               "label": "Páncélzat Fejlesztés",
-              "key": "pancalzat_fejlesztes"
+              "key": "pancelzat_fejlesztes"
             }
           ]
         },
@@ -300,7 +328,7 @@
         },
         {
           "label": "Ital",
-          "key": "Ital"
+          "key": "ital"
         }
       ]
     }
@@ -310,6 +338,9 @@
     "key": "sebzestipus",
     "component": "n-select",
     "default": [],
+    "filter": {
+      "type": "multiple"
+    },
     "props": {
       "placeholder": "válassz többet...",
       "multiple": true,
@@ -324,8 +355,8 @@
           "value": "fold"
         },
         {
-          "label": "tuz",
-          "value": "Tűz"
+          "label": "Tűz",
+          "value": "tuz"
         },
         {
           "label": "Víz",
@@ -363,8 +394,12 @@
     "key": "sebzes",
     "component": "n-slider",
     "default": [-11, 20],
-    "custom": {
-      "format-tooltip": "function"
+    "filter": {
+      "type": "range",
+      "keep": true
+    },
+    "replace": {
+      "-11": "-"
     },
     "props": {
       "placeholder": "válassz kettőt...",
@@ -389,26 +424,30 @@
     "label": "Páncél",
     "key": "pancel",
     "component": "n-slider",
-    "default": [-11, 20],
-    "custom": {
-      "format-tooltip": "function"
+    "default": [-11, 40],
+    "filter": {
+      "type": "range",
+      "keep": true
+    },
+    "replace": {
+      "-11": "-"
     },
     "props": {
       "placeholder": "válassz kettőt...",
       "min": -11,
-      "max": 20,
+      "max": 36,
       "range": true,
       "step": "1",
       "marks": {
         "-11": "-",
-        "-8": "-8",
-        "-4": "-4",
+        "-6": "-6",
         "0": "0",
-        "4": "4",
-        "8": "8",
+        "6": "6",
         "12": "12",
-        "16": "16",
-        "20": "20"
+        "18": "18",
+        "24": "24",
+        "30": "30",
+        "36": "36"
       }
     }
   },
@@ -416,7 +455,10 @@
     "label": "Speciális",
     "key": "specialis",
     "component": "n-select",
-    "default": [],
+    "filter": {
+      "type": "single"
+    },
+    "default": "",
     "props": {
       "placeholder": "válassz...",
       "clearable": true,
@@ -440,7 +482,10 @@
     "label": "Felszerelhető",
     "key": "felszerelheto",
     "component": "n-select",
-    "default": [],
+    "default": "",
+    "filter": {
+      "type": "single"
+    },
     "props": {
       "placeholder": "válassz...",
       "clearable": true,

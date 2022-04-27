@@ -1,12 +1,12 @@
 <script setup>
-import { ref, computed } from "vue";
-import Card from "./card.vue";
-import fullList from "../computed/cards.json";
+import { ref, computed, watch } from "vue";
 import _ from "lodash/fp";
+import { filterCards } from "../search";
+import Card from "./card.vue";
 
-const maxDisplay = 24;
+const props = defineProps(["searchData", "maxDisplay"]);
 
-const shortList = ref(fullList);
+const shortList = ref(filterCards({}));
 const cardActive = ref(false);
 const cardData = ref(null);
 
@@ -15,15 +15,28 @@ const showGallery = ref(false);
 
 let imageLoadedAll = 0;
 
+watch(
+  () => props.searchData,
+  _.debounce(100, (searchData) => {
+    imageLoadedAll = 0;
+    page.value = 1;
+    shortList.value = filterCards(searchData);
+  })
+);
+
+watch(page, () => {
+  showGallery.value = false;
+});
+
 const maxPage = computed(() => {
-  return Math.round(shortList.value.length / maxDisplay);
+  return Math.floor(shortList.value.length / props.maxDisplay + 1);
 });
 
 const displayList = computed(() => {
   return _.compose(
     _.first,
     _.at(page.value - 1),
-    _.chunk(maxDisplay)
+    _.chunk(props.maxDisplay)
   )(shortList.value);
 });
 
@@ -31,12 +44,9 @@ const imageLoaded = () => {
   imageLoadedAll += 1;
   if (imageLoadedAll >= displayList.value.length) {
     setTimeout(function () {
-      console.log("SHOW");
       showGallery.value = true;
       imageLoadedAll = 0;
     }, 100);
-  } else if (showGallery.value === true) {
-    showGallery.value = false;
   }
 };
 
@@ -48,26 +58,29 @@ const openCard = (card) => {
 
 <template>
   <card v-model:active="cardActive" :card-data="cardData"></card>
-  <n-layout has-sider>
-    <n-layout-sider>
+  <n-grid cols="2 s:1">
+    <n-grid-item>
       <slot name="header"></slot>
-    </n-layout-sider>
-    <n-layout-content>
+    </n-grid-item>
+    <n-grid-item>
       <n-space justify="end">
         <n-pagination v-model:page="page" :page-count="maxPage" />
       </n-space>
-    </n-layout-content>
-  </n-layout>
+    </n-grid-item>
+  </n-grid>
   <n-divider />
   <n-grid
     :x-gap="16"
     :y-gap="14"
-    cols="1 s:4 m:6 l:8 xl:12 2xl:12"
+    cols="1 s:4 m:6 l:8 xl:8 2xl:8"
     responsive="screen"
     id="gallery"
     :class="showGallery ? 'visible' : 'invisible'"
   >
-    <n-grid-item v-for="card in displayList" :key="card.sorszam">
+    <n-grid-item
+      v-for="card in displayList"
+      :key="`${card.nev}_${card.kiegeszito}_${card.kaszt}`"
+    >
       <n-card
         class="card-item"
         :bordered="false"

@@ -1,36 +1,115 @@
-import lunr from "lunr";
-import stemmer from "lunr-languages/lunr.stemmer.support";
-import lang from "lunr-languages/lunr.hu";
+// import lunr from "lunr";
+// import stemmer from "lunr-languages/lunr.stemmer.support";
+// import lang from "lunr-languages/lunr.hu";
+//
+// stemmer(lunr);
+// lang(lunr);
+//
+// var documents = [
+//   {
+//     name: "Lunr",
+//     text: "Van nálatok terasz",
+//   },
+//   {
+//     name: "React",
+//     text: "Nincsen nálunk terasz",
+//   },
+//   {
+//     name: "Lodash",
+//     text: "Helló szia szevasz",
+//   },
+// ];
+//
+// var idx = lunr(function () {
+//   this.use(lunr.hu);
+//   this.ref("name");
+//   this.field("text");
+//
+//   documents.forEach(function (doc) {
+//     this.add(doc);
+//   }, this);
+// });
+//
+// export default function () {
+//   console.log("***************");
+//   console.log(idx.search("terasz"));
+// }
 
-stemmer(lunr);
-lang(lunr);
+import _ from "lodash/fp";
+import settings from "./data/settings.json";
+import keys from "./computed/keys.json";
+import cards from "./computed/cards.json";
+import utils from "./data/utils.json";
 
-var documents = [
-  {
-    name: "Lunr",
-    text: "Van nálatok terasz",
-  },
-  {
-    name: "React",
-    text: "Nincsen nálunk terasz",
-  },
-  {
-    name: "Lodash",
-    text: "Helló szia szevasz",
-  },
-];
+const fotipus = utils.fotipus;
 
-var idx = lunr(function () {
-  this.use(lunr.hu);
-  this.ref("name");
-  this.field("text");
-
-  documents.forEach(function (doc) {
-    this.add(doc);
-  }, this);
-});
-
-export default function () {
-  console.log("***************");
-  console.log(idx.search("terasz"));
+export function filterCards(search) {
+  return _.reject(function (card) {
+    return _.find(function (setting) {
+      const filter = setting.filter;
+      const valueKey = filter.keys ? filter.keys : search[setting.key];
+      const value =
+        filter.keep || valueKey === "pajzs"
+          ? valueKey
+          : _.isArray(valueKey)
+          ? _.map((key) => keys[key], valueKey)
+          : keys[valueKey];
+      if (!value || _.isEmpty(value)) {
+        return false;
+      }
+      if (!search[setting.key] || _.isEmpty(search[setting.key])) {
+        return false;
+      }
+      const cardValue = card[setting.key];
+      const combined = ["fotipus", "altipus"];
+      let range, partitionedValues;
+      switch (filter.type) {
+        case "multiple":
+          return !_.includes(cardValue, value);
+        case "single":
+          return _.toLower(cardValue) !== _.toLower(value);
+        case "range":
+          range = _.sortBy((val) => val, value);
+          if (setting.replace) {
+            const replacedValue = setting.replace[range[0]];
+            if (replacedValue) {
+              if (cardValue === replacedValue) {
+                return false;
+              }
+            }
+          }
+          return !(cardValue >= range[0] && cardValue <= range[1]);
+        case "mesh":
+          return !_.any((setValue) => {
+            const [fo, al] = _.split("_", setValue);
+            const [cfo, cal] = _.map((tipus) => {
+              return _.compose(
+                _.replace(/é/g, "e"),
+                _.replace(/á/g, "a"),
+                _.toLower
+              )(tipus);
+            })([card.fotipus, card.altipus]);
+            return cfo === fo && (cal === al || (!cal && !al));
+          }, search[setting.key]);
+        case "combined":
+          partitionedValues = _.partition((value) => {
+            return _.includes(value, fotipus);
+          }, search[setting.key]);
+          return !_.every(
+            (index) => {
+              const searchValues = partitionedValues[index];
+              const type = combined[index];
+              const cardValue = card[type];
+              const values = _.map((value) => keys[value])(searchValues);
+              if (_.isEmpty(searchValues)) {
+                return true;
+              }
+              return _.includes(cardValue, values);
+            },
+            [0, 1]
+          );
+      }
+      return false;
+    }, settings);
+  })(cards);
 }

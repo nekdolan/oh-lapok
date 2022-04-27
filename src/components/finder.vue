@@ -1,17 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import { unref, reactive } from "vue";
 import settings from "../data/settings.json";
-import _ from "lodash/fp";
 
-const searchForm = _.compose(
-  ref,
-  _.fromPairs,
-  _.map((setting) => [setting.key, setting.default])
-)(settings);
+const props = defineProps(["title", "active", "search"]);
+const emit = defineEmits(["update:active", "update:search"]);
 
-defineProps(["title", "active"]);
-defineEmits(["update:active"]);
-
+const initSearch = { ...props.search };
+const clear = () => {
+  emit("update:search", initSearch);
+};
+const update = (key, value) => {
+  const search = { ...props.search, [key]: value };
+  emit("update:search", search);
+};
 </script>
 <template>
   <n-drawer
@@ -21,26 +22,23 @@ defineEmits(["update:active"]);
     placement="left"
   >
     <n-drawer-content :title="title" closable>
-      {{ searchForm }}
-      <n-form
-        :model="searchForm"
-        label-placement="left"
-        size="medium"
-        label-width="auto"
-      >
+      {{ search }}
+      <n-form label-placement="left" size="medium" label-width="auto">
         <n-form-item
           :label="setting.label"
           v-for="setting in settings"
           :key="setting.key"
         >
           <component
-            v-model:value="searchForm[setting.key]"
+            :value="search[setting.key]"
+            @update:value="update(setting.key, $event)"
             :is="setting.component"
             v-bind="setting.props"
             v-if="setting.component"
           />
         </n-form-item>
       </n-form>
+      <n-button @click="clear">Visszaállítás</n-button>
     </n-drawer-content>
   </n-drawer>
 </template>
