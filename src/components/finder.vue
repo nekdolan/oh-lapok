@@ -22,7 +22,6 @@ const update = (key, value) => {
     placement="left"
   >
     <n-drawer-content :title="title" closable>
-      {{ search }}
       <n-form label-placement="left" size="medium" label-width="auto">
         <n-form-item
           :label="setting.label"
