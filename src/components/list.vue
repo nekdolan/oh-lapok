@@ -25,6 +25,7 @@ watch(
   _.debounce(100, (searchData) => {
     imageLoadedAll = 0;
     page.value = 1;
+    showGallery.value = true;
     shortList.value = orderCards(filterCards(searchData));
   })
 );
