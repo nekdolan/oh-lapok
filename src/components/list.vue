@@ -4,9 +4,14 @@ import _ from "lodash/fp";
 import { filterCards } from "../search";
 import Card from "./card.vue";
 
+const orderCards = _.orderBy(
+  ["kaszt", "fotipus", "szint"],
+  ["desc", "desc", "asc"]
+);
+
 const props = defineProps(["searchData", "maxDisplay"]);
 
-const shortList = ref(filterCards({}));
+const shortList = ref(orderCards(filterCards({})));
 const cardActive = ref(false);
 const cardData = ref(null);
 
@@ -20,7 +25,7 @@ watch(
   _.debounce(100, (searchData) => {
     imageLoadedAll = 0;
     page.value = 1;
-    shortList.value = filterCards(searchData);
+    shortList.value = orderCards(filterCards(searchData));
   })
 );
 
