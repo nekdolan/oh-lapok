@@ -1,5 +1,20 @@
 [
   {
+    "label": "Név és képesség",
+    "key": "nev",
+    "component": "n-input",
+    "default": "",
+    "filter": {
+      "type": "text",
+      "keep": true
+    },
+    "props": {
+      "placeholder": "írd be a szót...",
+      "clearable": true,
+      "type": "text"
+    }
+  },
+  {
     "label": "Kaszt",
     "key": "kaszt",
     "component": "n-select",
@@ -283,6 +298,10 @@
             {
               "label": "Fegyverzet Fejlesztés",
               "key": "fegyverzet_fejlesztes"
+            },
+            {
+              "label": "Fegyverzet Relikvia",
+              "key": "fegyverzet_relikvia"
             }
           ]
         },
@@ -297,6 +316,10 @@
             {
               "label": "Páncélzat Fejlesztés",
               "key": "pancelzat_fejlesztes"
+            },
+            {
+              "label": "Páncélzat Relikvia",
+              "key": "pancelzat_relikvia"
             }
           ]
         },
@@ -323,6 +346,10 @@
             {
               "label": "Báb Képesség",
               "key": "kepesseg_bab"
+            },
+            {
+              "label": "Hátas Képesség",
+              "key": "kepesseg_hatas"
             }
           ]
         },

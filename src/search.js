@@ -1,39 +1,9 @@
-// import lunr from "lunr";
-// import stemmer from "lunr-languages/lunr.stemmer.support";
-// import lang from "lunr-languages/lunr.hu";
-//
-// stemmer(lunr);
-// lang(lunr);
-//
-// var documents = [
-//   {
-//     name: "Lunr",
-//     text: "Van nálatok terasz",
-//   },
-//   {
-//     name: "React",
-//     text: "Nincsen nálunk terasz",
-//   },
-//   {
-//     name: "Lodash",
-//     text: "Helló szia szevasz",
-//   },
-// ];
-//
-// var idx = lunr(function () {
-//   this.use(lunr.hu);
-//   this.ref("name");
-//   this.field("text");
-//
-//   documents.forEach(function (doc) {
-//     this.add(doc);
-//   }, this);
-// });
-//
-// export default function () {
-//   console.log("***************");
-//   console.log(idx.search("terasz"));
-// }
+import lunr from "lunr";
+import stemmer from "lunr-languages/lunr.stemmer.support";
+import lang from "lunr-languages/lunr.hu";
+
+stemmer(lunr);
+lang(lunr);
 
 import _ from "lodash/fp";
 import settings from "./data/settings.json";
@@ -41,9 +11,24 @@ import keys from "./computed/keys.json";
 import cards from "./computed/cards.json";
 import utils from "./data/utils.json";
 
+var idx = lunr(function () {
+  this.use(lunr.hu);
+  this.ref("sorszam");
+  this.field("nev");
+  this.field("kepesseg");
+
+  cards.forEach(function (doc) {
+    this.add(doc);
+  }, this);
+});
+
 const fotipus = utils.fotipus;
 
 export function filterCards(search) {
+  let found;
+  if (search.nev) {
+    found = _.map("ref", idx.search(`*${search.nev}~2`));
+  }
   return _.reject(function (card) {
     return _.find(function (setting) {
       const filter = setting.filter;
@@ -64,6 +49,8 @@ export function filterCards(search) {
       const combined = ["fotipus", "altipus"];
       let range, partitionedValues;
       switch (filter.type) {
+        case "text":
+          return !_.includes(card.sorszam, found);
         case "multiple":
           return !_.includes(cardValue, value);
         case "single":

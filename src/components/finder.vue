@@ -1,5 +1,4 @@
 <script setup>
-import { unref, reactive } from "vue";
 import settings from "../data/settings.json";
 
 const props = defineProps(["title", "active", "search"]);

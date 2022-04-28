@@ -22,8 +22,7 @@ let imageLoadedAll = 0;
 
 watch(
   () => props.searchData,
-  _.debounce(100, (searchData) => {
-    imageLoadedAll = 0;
+  _.debounce(200, (searchData) => {
     page.value = 1;
     showGallery.value = true;
     shortList.value = orderCards(filterCards(searchData));
