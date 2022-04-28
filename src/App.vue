@@ -8,9 +8,11 @@ import List from "./components/list.vue";
 import settings from "./data/settings.json";
 
 let windowHeight = 0;
+let windowWidth = 500;
 
 try {
   windowHeight = window.innerHeight;
+  windowWidth = window.innerWidth;
 } catch (e) {}
 
 const maxDisplay = windowHeight > 1000 ? 32 : 24;
@@ -36,6 +38,7 @@ function activate() {
         title="Kártya Keresés"
         v-model:active="finderActive"
         v-model:search="searchData"
+        :width="windowWidth"
       />
     </header>
     <main>

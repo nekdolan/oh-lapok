@@ -27,7 +27,7 @@ const fotipus = utils.fotipus;
 export function filterCards(search) {
   let found;
   if (search.nev) {
-    found = _.map("ref", idx.search(`*${search.nev}~2`));
+    found = _.map("ref", idx.search(`*${search.nev}*`));
   }
   return _.reject(function (card) {
     return _.find(function (setting) {

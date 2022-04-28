@@ -1,7 +1,7 @@
 <script setup>
 import settings from "../data/settings.json";
 
-const props = defineProps(["title", "active", "search"]);
+const props = defineProps(["title", "active", "search", "width"]);
 const emit = defineEmits(["update:active", "update:search"]);
 
 const initSearch = { ...props.search };
@@ -17,12 +17,13 @@ const update = (key, value) => {
   <n-drawer
     :show="active"
     @update:show="$emit('update:active', $event)"
-    :width="502"
     placement="left"
+    :width="Math.min(502, width)"
   >
     <n-drawer-content :title="title" closable>
       <n-form label-placement="left" size="medium" label-width="auto">
         <n-form-item
+          :label-placement="width < 502 ? 'top' : 'left'"
           :label="setting.label"
           v-for="setting in settings"
           :key="setting.key"

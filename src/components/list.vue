@@ -63,11 +63,11 @@ const openCard = (card) => {
 
 <template>
   <card v-model:active="cardActive" :card-data="cardData"></card>
-  <n-grid cols="2 s:1">
-    <n-grid-item>
+  <n-grid cols="1 s:1 m:1 l:2" responsive="screen">
+    <n-grid-item class="top-nav">
       <slot name="header"></slot>
     </n-grid-item>
-    <n-grid-item>
+    <n-grid-item class="top-nav">
       <n-space justify="end">
         <n-pagination v-model:page="page" :page-count="maxPage" />
       </n-space>
@@ -123,6 +123,9 @@ const openCard = (card) => {
   100% {
     filter: brightness(100%);
   }
+}
+.top-nav {
+  margin: 0 0 4px 0;
 }
 #gallery .card-item:hover img {
   filter: brightness(100%);

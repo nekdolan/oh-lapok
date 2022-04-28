@@ -93,7 +93,7 @@ const modalActive = ref(false);
 <style>
 .info {
   padding: 10px 15px;
-  font-size: 30px;
+  font-size: 2em;
   color: white;
 }
 .info .info-data {
