@@ -1,7 +1,7 @@
 <script setup>
 import _ from "lodash/fp";
-import { ref, reactive } from "vue";
-import { darkTheme } from "naive-ui";
+import { ref } from "vue";
+// import { darkTheme } from "naive-ui";
 import { Search12Regular } from "@vicons/fluent";
 import Finder from "./components/finder.vue";
 import List from "./components/list.vue";
@@ -18,7 +18,6 @@ try {
 const maxDisplay = windowHeight > 1000 ? 32 : 24;
 
 const searchData = _.compose(
-  // reactive,
   ref,
   _.fromPairs,
   _.map((setting) => [setting.key, setting.default])
@@ -32,7 +31,8 @@ function activate() {
 </script>
 
 <template>
-  <n-config-provider :theme="darkTheme">
+  <!--  <n-config-provider :theme="darkTheme">-->
+  <n-config-provider>
     <header>
       <finder
         title="Kártya Keresés"

@@ -47,7 +47,7 @@ const displayList = computed(() => {
 
 const imageLoaded = () => {
   imageLoadedAll += 1;
-  if (imageLoadedAll >= displayList.value.length) {
+  if (displayList.value && imageLoadedAll >= displayList.value.length) {
     setTimeout(function () {
       showGallery.value = true;
       imageLoadedAll = 0;
@@ -63,7 +63,7 @@ const openCard = (card) => {
 
 <template>
   <card v-model:active="cardActive" :card-data="cardData"></card>
-  <n-grid cols="1 s:1 m:1 l:2" responsive="screen">
+  <n-grid cols="1 s:1 m:2 l:2" responsive="screen">
     <n-grid-item class="top-nav">
       <slot name="header"></slot>
     </n-grid-item>

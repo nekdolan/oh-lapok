@@ -2,7 +2,7 @@
   {
     "label": "Név és képesség",
     "key": "nev",
-    "component": "n-input",
+    "component": "n-auto-complete",
     "default": "",
     "filter": {
       "type": "text",
@@ -10,8 +10,7 @@
     },
     "props": {
       "placeholder": "írd be a szót...",
-      "clearable": true,
-      "type": "text"
+      "clearable": true
     }
   },
   {
