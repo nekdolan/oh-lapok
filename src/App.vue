@@ -17,7 +17,7 @@ try {
   isIframe = window.location !== window.parent.location;
 } catch (e) {}
 
-const maxDisplay = windowHeight > 1000 ? 32 : 24;
+const maxDisplay = windowHeight > 1300 ? 32 : 12;
 
 const searchData = _.compose(
   ref,
@@ -49,6 +49,7 @@ function activate() {
       />
     </header>
     <main>
+      {{ windowHeight }}
       <list :search-data="searchData" :max-display="maxDisplay">
         <template #header>
           <n-button type="primary" @click="activate()">
