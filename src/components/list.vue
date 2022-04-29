@@ -45,8 +45,13 @@ const displayList = computed(() => {
   )(shortList.value);
 });
 
+const ensureVisibility = _.debounce(3000, function () {
+  showGallery.value = true;
+});
+
 const imageLoaded = () => {
   imageLoadedAll += 1;
+  ensureVisibility();
   if (displayList.value && imageLoadedAll >= displayList.value.length) {
     setTimeout(function () {
       showGallery.value = true;
