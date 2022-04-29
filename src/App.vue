@@ -49,7 +49,6 @@ function activate() {
       />
     </header>
     <main>
-      {{ windowHeight }}
       <list :search-data="searchData" :max-display="maxDisplay">
         <template #header>
           <n-button type="primary" @click="activate()">
