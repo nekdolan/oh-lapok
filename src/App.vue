@@ -1,7 +1,7 @@
 <script setup>
 import _ from "lodash/fp";
 import { ref } from "vue";
-// import { darkTheme } from "naive-ui";
+import { darkTheme } from "naive-ui";
 import { Search12Regular } from "@vicons/fluent";
 import Finder from "./components/finder.vue";
 import List from "./components/list.vue";
@@ -9,10 +9,12 @@ import settings from "./data/settings.json";
 
 let windowHeight = 0;
 let windowWidth = 500;
+let isIframe = false;
 
 try {
   windowHeight = window.innerHeight;
   windowWidth = window.innerWidth;
+  isIframe = window.location !== window.parent.location;
 } catch (e) {}
 
 const maxDisplay = windowHeight > 1000 ? 32 : 24;
@@ -31,8 +33,13 @@ function activate() {
 </script>
 
 <template>
-  <!--  <n-config-provider :theme="darkTheme">-->
-  <n-config-provider>
+  <n-config-provider
+    :theme="isIframe ? undefined : darkTheme"
+    :style="`background-color: ${isIframe ? 'transparent' : 'black'}; ${
+      isIframe ? '' : 'padding: 10px 20px;'
+    }`"
+  >
+    <n-global-style />
     <header>
       <finder
         title="Kártya Keresés"
