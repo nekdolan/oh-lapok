@@ -9,7 +9,7 @@ body {
     display: flex;
     align-items: stretch;
     flex-grow: 1;
-    min-height: 95vh;
+    min-height: 90vh;
 }
 
 #app > * {
