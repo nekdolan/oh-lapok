@@ -37,6 +37,12 @@ const maxPage = computed(() => {
   return Math.floor(shortList.value.length / props.maxDisplay + 1);
 });
 
+watch(maxPage, () => {
+  if (maxPage.value < page.value) {
+    page.value = maxPage.value;
+  }
+});
+
 const displayList = computed(() => {
   return _.compose(
     _.first,
@@ -82,9 +88,8 @@ const openCard = (card) => {
   <n-grid
     :x-gap="16"
     :y-gap="14"
-    cols="1 s:4 m:6 l:8 xl:8 2xl:8"
-    responsive="screen"
     id="gallery"
+    cols="1 650:2 700:3 850:4 1000:6"
     :class="showGallery ? 'visible' : 'invisible'"
   >
     <n-grid-item
@@ -101,8 +106,6 @@ const openCard = (card) => {
           <n-tooltip trigger="hover" :delay="75" :duration="75">
             <template #trigger>
               <img
-                :srcset="`${card.kiskep} 143w, ${card.nagykep} 620w`"
-                sizes="(max-width: 1280px) 143px, 620px"
                 :src="card.kiskep"
                 :alt="card.nev"
                 @load="imageLoaded(card.nev)"
