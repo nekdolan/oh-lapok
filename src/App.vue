@@ -33,7 +33,7 @@ const handleAppResize = _.debounce(500, () => {
 });
 
 const maxDisplay = computed(() => {
-  return appHeight.value > 1200 ? 24 : appHeight.value > 900 ? 16 : 8;
+  return appHeight.value > 1100 ? 24 : appHeight.value > 800 ? 16 : 8;
 });
 
 const searchData = _.compose(

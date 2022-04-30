@@ -1,7 +1,4 @@
 body {
-    height: 100vh;
-    display: flex;
-    align-items: stretch;
 }
 
 #app {
@@ -12,7 +9,7 @@ body {
     display: flex;
     align-items: stretch;
     flex-grow: 1;
-    min-height: 80vh;
+    min-height: 95vh;
 }
 
 #app > * {
