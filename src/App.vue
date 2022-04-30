@@ -1,23 +1,38 @@
 <script setup>
 import _ from "lodash/fp";
-import { ref } from "vue";
+import { computed, ref, onMounted, onUnmounted } from "vue";
 import { darkTheme } from "naive-ui";
 import { Search12Regular } from "@vicons/fluent";
 import Finder from "./components/finder.vue";
 import List from "./components/list.vue";
 import settings from "./data/settings.json";
 
-let windowHeight = 0;
-let windowWidth = 500;
+const container = ref(null);
+const appHeight = ref(480);
+const appWidth = ref(640);
 let isIframe = false;
+let windowHeight = 0;
+let windowWidth = 0;
 
 try {
-  windowHeight = window.innerHeight;
-  windowWidth = window.innerWidth;
-  isIframe = window.location !== window.parent.location;
+  isIframe =
+    window.location !== window.parent.location ||
+    document.body.getAttribute("data-imported") !== "false";
 } catch (e) {}
 
-const maxDisplay = windowHeight > 1300 ? 32 : 12;
+const handleAppResize = _.debounce(500, () => {
+  if (
+    window.innerHeight !== windowHeight ||
+    window.innerWidth !== windowWidth
+  ) {
+    windowHeight = window.innerHeight;
+    windowWidth = window.innerWidth;
+    appHeight.value = container.value ? container.value.clientHeight : 480;
+    appWidth.value = container.value ? container.value.clientHeight : 640;
+  }
+});
+
+const maxDisplay = computed(() => (appHeight.value > 1100 ? 32 : 16));
 
 const searchData = _.compose(
   ref,
@@ -30,6 +45,14 @@ const finderActive = ref(false);
 function activate() {
   finderActive.value = !finderActive.value;
 }
+
+onMounted(() => {
+  handleAppResize();
+  window.addEventListener("resize", handleAppResize);
+});
+onUnmounted(() => {
+  window.removeEventListener("resize", handleAppResize);
+});
 </script>
 
 <template>
@@ -40,15 +63,13 @@ function activate() {
     }`"
   >
     <n-global-style />
-    <header>
+    <main ref="container" id="vue-container">
       <finder
         title="Kártya Keresés"
         v-model:active="finderActive"
         v-model:search="searchData"
-        :width="windowWidth"
+        :width="appWidth"
       />
-    </header>
-    <main>
       <list :search-data="searchData" :max-display="maxDisplay">
         <template #header>
           <n-button type="primary" @click="activate()">
@@ -67,4 +88,8 @@ function activate() {
 
 <style>
 @import "./assets/base.css";
+
+#vue-container {
+  width: 100%;
+}
 </style>
