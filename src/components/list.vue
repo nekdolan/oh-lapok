@@ -76,7 +76,9 @@ const openCard = (card) => {
   <card v-model:active="cardActive" :card-data="cardData"></card>
   <n-grid cols="1 s:2 m:2 l:2" responsive="screen">
     <n-grid-item class="top-nav">
-      <slot name="header"></slot>
+      <n-space justify="start">
+        <slot name="header"></slot>
+      </n-space>
     </n-grid-item>
     <n-grid-item class="top-nav">
       <n-space justify="end">
@@ -89,7 +91,7 @@ const openCard = (card) => {
     :x-gap="16"
     :y-gap="14"
     id="gallery"
-    cols="1 650:2 700:3 850:4 1000:6"
+    cols="1 400:2 650:2 700:4 850:6 1000:6"
     :class="showGallery ? 'visible' : 'invisible'"
   >
     <n-grid-item

@@ -10,8 +10,6 @@
   "dependencies": {
     "@fast-csv/parse": "^4.3.6",
     "lodash": "^4.17.21",
-    "lunr": "^2.3.9",
-    "lunr-languages": "^1.9.0",
     "vue": "^3.2.33"
   },
   "devDependencies": {

@@ -1,42 +1,46 @@
-import lunr from "lunr";
-import stemmer from "lunr-languages/lunr.stemmer.support";
-import lang from "lunr-languages/lunr.hu";
-
-stemmer(lunr);
-lang(lunr);
-
 import _ from "lodash/fp";
 import settings from "./data/settings.json";
 import keys from "./computed/keys.json";
 import cards from "./computed/cards.json";
 import utils from "./data/utils.json";
 
-var idx = lunr(function () {
-  this.use(lunr.hu);
-  this.ref("sorszam");
-  this.field("nev");
-  this.field("kepesseg");
+const latinList = [
+  { hun: ["ö", "ő", "ó"], eng: "o" },
+  { hun: ["ü", "ű", "ú"], eng: "u" },
+  { hun: ["á"], eng: "a" },
+  { hun: ["é"], eng: "e" },
+  { hun: ["í"], eng: "i" },
+];
+export const latinize = _.compose(
+  _.replace(/[öüóőúűéáí]/g, (x) => {
+    return _.find((list) => _.includes(_.toLower(x), list.hun), latinList).eng;
+  }),
+  _.toLower
+);
 
-  cards.forEach(function (doc) {
-    this.add(doc);
-  }, this);
-});
+const searchCardsList = _.map((card) => {
+  return {
+    nev: latinize(card.nev),
+    kepesseg: latinize(card.kepesseg),
+    sorszam: card.sorszam,
+  };
+})(cards);
 
 const fotipus = utils.fotipus;
 
 export function filterCards(search) {
   let found;
   if (search.nev) {
-    const nev = _.compose(
-      _.join(" "),
-      _.map((part) => "+" + part),
-      _.split(" ")
-    )(search.nev);
+    const words = _.split(",", latinize(search.nev));
     found = _.compose(
-      _.uniq,
-      _.map("ref"),
-      _.flatten
-    )([idx.search(nev), idx.search(`*${nev}*~1`)]);
+      _.map((card) => card.sorszam),
+      _.filter((card) => {
+        return _.any((word) => {
+          const condition = new RegExp(`.*${word}.*`);
+          return condition.test(card.nev) || condition.test(card.kepesseg);
+        })(words);
+      })
+    )(searchCardsList);
   }
   return _.reject(function (card) {
     return _.find(function (setting) {

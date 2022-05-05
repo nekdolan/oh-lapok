@@ -11,8 +11,8 @@ const container = ref(null);
 const appHeight = ref(480);
 const appWidth = ref(640);
 let isIframe = false;
-let windowHeight = 0;
-let windowWidth = 0;
+let windowHeight = ref(0);
+let windowWidth = ref(0);
 
 try {
   isIframe =
@@ -22,18 +22,19 @@ try {
 
 const handleAppResize = _.debounce(500, () => {
   if (
-    window.innerHeight !== windowHeight ||
-    window.innerWidth !== windowWidth
+    window.innerHeight !== windowHeight.value ||
+    window.innerWidth !== windowWidth.value
   ) {
-    windowHeight = window.innerHeight;
-    windowWidth = window.innerWidth;
+    windowHeight.value = window.innerHeight;
+    windowWidth.value = window.innerWidth;
     appHeight.value = container.value ? container.value.clientHeight : 480;
-    appWidth.value = container.value ? container.value.clientHeight : 640;
+    appWidth.value = container.value ? container.value.clientWidth : 640;
   }
 });
 
 const maxDisplay = computed(() => {
-  return appHeight.value > 1100 ? 24 : appHeight.value > 800 ? 16 : 8;
+  // return appHeight.value > 1100 ? 24 : appHeight.value > 800 ? 16 : 8;
+  return windowHeight.value > 1100 ? 24 : windowHeight.value > 800 ? 18 : 6;
 });
 
 const searchData = _.compose(

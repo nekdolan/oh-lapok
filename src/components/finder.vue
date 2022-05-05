@@ -3,6 +3,7 @@ import _ from "lodash/fp";
 import cards from "../computed/cards.json";
 import settings from "../data/settings.json";
 import { computed, reactive } from "vue";
+import { latinize } from "../search";
 
 const props = defineProps(["title", "active", "search", "width"]);
 const emit = defineEmits(["update:active", "update:search"]);
@@ -13,8 +14,8 @@ const nevList = _.compose(
 )(cards);
 
 const autoCompleteList = computed(() => {
-  const value = props.search.nev;
-  return _.filter((nev) => new RegExp(`${value}.*`).test(nev), nevList);
+  const value = latinize(props.search.nev);
+  return _.filter((nev) => new RegExp(`.*${value}.*`, "i").test(latinize(nev)), nevList);
 });
 
 settings[0].props = reactive({
