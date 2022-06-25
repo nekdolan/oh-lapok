@@ -207,6 +207,10 @@
               "key": "gnom_ferfi"
             },
             {
+              "label": "Gnóm (Nő)",
+              "key": "gnom_no"
+            },
+            {
               "label": "Hárpia (Nő)",
               "key": "harpia_no"
             },
@@ -225,6 +229,10 @@
             {
               "label": "Kobold (Férfi)",
               "key": "kobold_ferfi"
+            },
+            {
+              "label": "Naga (Férfi)",
+              "key": "naga_ferfi"
             },
             {
               "label": "Ork (Férfi)",
