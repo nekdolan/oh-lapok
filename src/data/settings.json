@@ -269,6 +269,14 @@
             {
               "label": "Élőholt (Férfi)",
               "key": "eloholt_ferfi"
+            },
+            {
+              "label": "Élőholt (Nő)",
+              "key": "eloholt_no"
+            },
+            {
+              "label": "Alakváltó (Férfi)",
+              "key": "alakvalto_ferfi"
             }
           ]
         }
@@ -419,6 +427,10 @@
         {
           "label": "Lélek",
           "value": "lelek"
+        },
+        {
+          "label": "Vér",
+          "value": "ver"
         }
       ]
     }
@@ -508,6 +520,10 @@
         {
           "label": "Fegyverzet része: Pajzs",
           "value": "pajzs"
+        },
+        {
+          "label": "Áldozat",
+          "value": "aldozat"
         }
       ]
     }
