@@ -72,6 +72,10 @@
           "value": "szovetseg"
         },
         {
+          "label": "Árnyas Fellegek",
+          "value": "arnyas"
+        },
+        {
           "label": "Egyedi",
           "value": "egyedi"
         },
@@ -375,6 +379,10 @@
         {
           "label": "Ital",
           "key": "ital"
+        },
+        {
+          "label": "Tekercs",
+          "key": "tekercs"
         }
       ]
     }

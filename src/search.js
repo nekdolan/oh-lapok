@@ -29,6 +29,7 @@ const searchCardsList = _.map((card) => {
 const fotipus = utils.fotipus;
 
 export function filterCards(search) {
+  console.log(JSON.stringify(search))
   let found;
   if (search.nev) {
     const words = _.split(",", latinize(search.nev));
@@ -89,6 +90,7 @@ export function filterCards(search) {
                 _.toLower
               )(tipus);
             })([card.fotipus, card.altipus]);
+            console.log(card.fotipus, card.altipus, cfo, fo, cal, al, !cal, !al)
             return cfo === fo && (cal === al || (!cal && !al));
           }, search[setting.key]);
         case "combined":
